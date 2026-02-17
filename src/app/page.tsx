@@ -1,65 +1,204 @@
-import Image from "next/image";
+"use client";
+
+import { BatchInputSection } from "@/components/batch-input-section";
+import { BatchResultsSection } from "@/components/batch-results-section";
+import { InputSection } from "@/components/input-section";
+import { PreviewSection } from "@/components/preview-section";
+import type {
+  BatchGenerateResponse,
+  BatchResult,
+  GenerateResponse,
+} from "@/types";
+import { Github, Layers, Sparkles, Terminal } from "lucide-react";
+import { useState } from "react";
+
+type Mode = "single" | "batch";
 
 export default function Home() {
+  const [mode, setMode] = useState<Mode>("single");
+  const [topic, setTopic] = useState("");
+  const [batchUrls, setBatchUrls] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [generatedContent, setGeneratedContent] = useState("");
+  const [batchResults, setBatchResults] = useState<BatchResult[]>([]);
+  const [error, setError] = useState("");
+
+  async function handleGenerate() {
+    setLoading(true);
+    setError("");
+    setGeneratedContent("");
+
+    try {
+      const isUrl = topic.trim().match(/^https?:\/\//);
+      const body = isUrl ? { url: topic.trim() } : { topic: topic.trim() };
+
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Generation failed");
+      }
+
+      const data: GenerateResponse = await res.json();
+      setGeneratedContent(data.content);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleBatchGenerate() {
+    setLoading(true);
+    setError("");
+    setBatchResults([]);
+    setGeneratedContent("");
+
+    const urls = batchUrls
+      .split("\n")
+      .map((l) => l.trim())
+      .filter((l) => l.match(/^https?:\/\//));
+
+    setBatchResults(
+      urls.map((url) => ({ url, content: "", success: false })),
+    );
+
+    try {
+      const res = await fetch("/api/generate-batch", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ urls }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Batch generation failed");
+      }
+
+      const data: BatchGenerateResponse = await res.json();
+      setBatchResults(data.results);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="flex min-h-screen flex-col items-center bg-white px-4 py-12 dark:bg-black">
+      <div className="flex w-full max-w-3xl flex-col items-center gap-8">
+        <header className="flex flex-col items-center gap-4 text-center">
+          <div className="flex items-center gap-3">
+            <div className="flex size-12 items-center justify-center rounded-lg border-2 border-black shadow-brutal-sm dark:border-white">
+              <Sparkles className="size-6" />
+            </div>
+            <h1 className="font-bold text-4xl tracking-tight">
+              <span className="bg-gradient-to-r from-black to-black/60 bg-clip-text text-transparent dark:from-white dark:to-white/60">
+                skillcraft
+              </span>
+            </h1>
+          </div>
+          <p className="max-w-md text-muted-foreground">
+            Generate AI agent skills from any documentation URL. Powered by
+            Firecrawl for scraping and your choice of LLM.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+            href="https://github.com/crafter-station/skillcraft"
             target="_blank"
             rel="noopener noreferrer"
+            className="flex items-center gap-1.5 font-mono text-muted-foreground text-xs transition-colors hover:text-foreground"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
+            <Github className="size-3.5" />
+            crafter-station/skillcraft
           </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        </header>
+
+        <div className="flex items-center gap-1 rounded-lg border-2 border-black p-1 shadow-brutal-sm dark:border-white">
+          <button
+            type="button"
+            onClick={() => setMode("single")}
+            className={`flex items-center gap-2 rounded-md px-4 py-2 font-semibold text-sm transition-colors ${
+              mode === "single"
+                ? "bg-black text-white dark:bg-white dark:text-black"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
           >
-            Documentation
-          </a>
+            <Terminal className="size-4" />
+            Single Skill
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode("batch")}
+            className={`flex items-center gap-2 rounded-md px-4 py-2 font-semibold text-sm transition-colors ${
+              mode === "batch"
+                ? "bg-black text-white dark:bg-white dark:text-black"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <Layers className="size-4" />
+            Batch Mode
+          </button>
         </div>
-      </main>
+
+        {mode === "single" ? (
+          <InputSection
+            value={topic}
+            onChange={setTopic}
+            onSubmit={handleGenerate}
+            loading={loading}
+          />
+        ) : (
+          <BatchInputSection
+            value={batchUrls}
+            onChange={setBatchUrls}
+            onSubmit={handleBatchGenerate}
+            loading={loading}
+          />
+        )}
+
+        {error && (
+          <div className="w-full rounded-lg border-2 border-red-600 bg-red-50 px-4 py-3 text-red-700 text-sm dark:bg-red-950/20 dark:text-red-400">
+            {error}
+          </div>
+        )}
+
+        {mode === "batch" && batchResults.length > 0 && (
+          <BatchResultsSection
+            results={batchResults}
+            onPreview={setGeneratedContent}
+          />
+        )}
+
+        {generatedContent && <PreviewSection content={generatedContent} />}
+
+        <footer className="pb-8 text-center">
+          <p className="text-muted-foreground text-xs">
+            Open source by{" "}
+            <a
+              href="https://github.com/crafter-station"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium underline underline-offset-4 transition-colors hover:text-foreground"
+            >
+              Crafter Station
+            </a>
+            . Uses{" "}
+            <a
+              href="https://firecrawl.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium underline underline-offset-4 transition-colors hover:text-foreground"
+            >
+              Firecrawl
+            </a>{" "}
+            for scraping.
+          </p>
+        </footer>
+      </div>
     </div>
   );
 }
