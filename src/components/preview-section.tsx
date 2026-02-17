@@ -35,13 +35,13 @@ export function PreviewSection({ content }: PreviewSectionProps) {
   }, [content]);
 
   return (
-    <div className="flex w-full flex-col rounded-lg border-2 border-crafter-amber-dark/30 bg-card shadow-brutal dark:border-crafter-teal/30">
-      <div className="flex items-center justify-between border-b-2 border-crafter-amber-dark/20 px-4 py-3 dark:border-crafter-teal/20">
-        <div className="flex items-center gap-2">
+    <div className="flex w-full flex-col border-2 border-border bg-card shadow-brutal">
+      <div className="flex items-center justify-between border-b-2 border-border px-4 py-3">
+        <div className="flex items-center gap-3">
           <div className="flex gap-1.5">
-            <div className="size-3 rounded-full bg-crafter-amber" />
-            <div className="size-3 rounded-full bg-crafter-teal" />
-            <div className="size-3 rounded-full bg-crafter-amber-dark" />
+            <div className="size-3 bg-gold" />
+            <div className="size-3 bg-gold/60" />
+            <div className="size-3 bg-gold/30" />
           </div>
           <span className="font-mono text-muted-foreground text-xs">
             SKILL.md
@@ -52,7 +52,7 @@ export function PreviewSection({ content }: PreviewSectionProps) {
             variant="ghost"
             size="sm"
             onClick={handleCopy}
-            className="gap-1.5 text-xs hover:text-crafter-amber-dark dark:hover:text-crafter-teal"
+            className="gap-1.5 text-xs hover:text-gold"
           >
             {copied ? (
               <Check className="size-3.5" />
@@ -65,7 +65,7 @@ export function PreviewSection({ content }: PreviewSectionProps) {
             variant="ghost"
             size="sm"
             onClick={handleDownload}
-            className="gap-1.5 text-xs hover:text-crafter-amber-dark dark:hover:text-crafter-teal"
+            className="gap-1.5 text-xs hover:text-gold"
           >
             <Download className="size-3.5" />
             Download
@@ -83,13 +83,13 @@ export function PreviewSection({ content }: PreviewSectionProps) {
                   style={oneDark}
                   language={match[1]}
                   PreTag="div"
-                  className="!rounded-md !border-2 !border-crafter-amber-dark/20 dark:!border-crafter-teal/20"
+                  className="!border-2 !border-border"
                 >
                   {String(children).replace(/\n$/, "")}
                 </SyntaxHighlighter>
               ) : (
                 <code
-                  className="rounded bg-crafter-amber/10 px-1.5 py-0.5 font-mono text-crafter-amber-dark text-sm dark:bg-crafter-teal/10 dark:text-crafter-teal"
+                  className="bg-gold/10 px-1.5 py-0.5 font-mono text-gold text-sm"
                   {...rest}
                 >
                   {children}

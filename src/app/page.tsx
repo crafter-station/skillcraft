@@ -4,6 +4,7 @@ import { BatchInputSection } from "@/components/batch-input-section";
 import { BatchResultsSection } from "@/components/batch-results-section";
 import { InputSection } from "@/components/input-section";
 import { PreviewSection } from "@/components/preview-section";
+import { ThemeToggle } from "@/components/theme-toggle";
 import type {
   BatchGenerateResponse,
   BatchResult,
@@ -90,16 +91,19 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-background px-4 py-12">
+      <div className="absolute top-4 right-4">
+        <ThemeToggle />
+      </div>
+
       <div className="flex w-full max-w-3xl flex-col items-center gap-8">
         <header className="flex flex-col items-center gap-4 text-center">
           <div className="flex items-center gap-3">
-            <div className="flex size-12 items-center justify-center rounded-lg border-2 border-crafter-amber-dark bg-crafter-amber/10 shadow-brutal-sm dark:border-crafter-teal dark:bg-crafter-teal/10">
-              <Hammer className="size-6 text-crafter-amber-dark dark:text-crafter-teal" />
+            <div className="flex size-12 items-center justify-center border-2 border-gold bg-gold/10 shadow-brutal-sm">
+              <Hammer className="size-6 text-gold" />
             </div>
-            <h1 className="font-bold text-4xl tracking-tight">
-              <span className="bg-gradient-to-r from-crafter-amber-dark to-crafter-teal bg-clip-text text-transparent">
-                skillcraft
-              </span>
+            <h1 className="font-bold text-4xl tracking-tight uppercase">
+              <span className="text-gold">Skill</span>
+              <span className="text-foreground">Craft</span>
             </h1>
           </div>
           <p className="max-w-md text-muted-foreground">
@@ -110,33 +114,34 @@ export default function Home() {
             href="https://github.com/crafter-station/skillcraft"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 font-mono text-muted-foreground text-xs transition-colors hover:text-crafter-amber-dark dark:hover:text-crafter-teal"
+            className="flex items-center gap-1.5 font-mono text-muted-foreground text-xs transition-colors hover:text-gold"
           >
             <Github className="size-3.5" />
             crafter-station/skillcraft
           </a>
         </header>
 
-        <div className="flex items-center gap-1 rounded-lg border-2 border-crafter-amber-dark/30 bg-card p-1 shadow-brutal-sm dark:border-crafter-teal/30">
+        <div className="flex items-center gap-0 border-2 border-border">
           <button
             type="button"
             onClick={() => setMode("single")}
-            className={`flex items-center gap-2 rounded-md px-4 py-2 font-semibold text-sm transition-all ${
+            className={`flex items-center gap-2 px-5 py-2.5 font-semibold text-sm transition-colors ${
               mode === "single"
-                ? "bg-crafter-amber-dark text-white shadow-sm dark:bg-crafter-teal"
-                : "text-muted-foreground hover:text-foreground"
+                ? "bg-gold text-black"
+                : "bg-card text-muted-foreground hover:text-foreground"
             }`}
           >
             <Terminal className="size-4" />
             Single Skill
           </button>
+          <div className="h-full w-[2px] bg-border" />
           <button
             type="button"
             onClick={() => setMode("batch")}
-            className={`flex items-center gap-2 rounded-md px-4 py-2 font-semibold text-sm transition-all ${
+            className={`flex items-center gap-2 px-5 py-2.5 font-semibold text-sm transition-colors ${
               mode === "batch"
-                ? "bg-crafter-amber-dark text-white shadow-sm dark:bg-crafter-teal"
-                : "text-muted-foreground hover:text-foreground"
+                ? "bg-gold text-black"
+                : "bg-card text-muted-foreground hover:text-foreground"
             }`}
           >
             <Layers className="size-4" />
@@ -161,7 +166,7 @@ export default function Home() {
         )}
 
         {error && (
-          <div className="w-full rounded-lg border-2 border-red-600 bg-red-50 px-4 py-3 text-red-700 text-sm dark:bg-red-950/20 dark:text-red-400">
+          <div className="w-full border-2 border-destructive bg-destructive/10 px-4 py-3 text-destructive text-sm">
             {error}
           </div>
         )}
@@ -182,7 +187,7 @@ export default function Home() {
               href="https://github.com/crafter-station"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-crafter-amber-dark underline underline-offset-4 transition-colors hover:text-crafter-amber dark:text-crafter-teal dark:hover:text-crafter-teal/80"
+              className="font-medium text-gold underline-offset-4 transition-colors hover:underline"
             >
               Crafter Station
             </a>
@@ -191,7 +196,7 @@ export default function Home() {
               href="https://firecrawl.dev"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium underline underline-offset-4 transition-colors hover:text-foreground"
+              className="font-medium underline-offset-4 transition-colors hover:text-foreground hover:underline"
             >
               Firecrawl
             </a>

@@ -23,9 +23,9 @@ export function InputSection({
         e.preventDefault();
         onSubmit();
       }}
-      className="flex w-full items-center gap-2 rounded-lg border-2 border-crafter-amber-dark/30 bg-card p-2 shadow-brutal dark:border-crafter-teal/30"
+      className="flex w-full items-center gap-2 border-2 border-border bg-card p-2 shadow-brutal"
     >
-      <Terminal className="ml-2 size-5 shrink-0 text-crafter-amber-dark dark:text-crafter-teal" />
+      <Terminal className="ml-2 size-5 shrink-0 text-gold" />
       <Input
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -36,7 +36,7 @@ export function InputSection({
       <Button
         type="submit"
         disabled={loading || !value.trim()}
-        className="shrink-0 gap-2 rounded-md border-2 border-crafter-amber-dark bg-crafter-amber-dark px-6 font-semibold text-white shadow-brutal-sm transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-crafter-amber hover:shadow-none dark:border-crafter-teal dark:bg-crafter-teal dark:hover:bg-crafter-teal/80"
+        className="shrink-0 gap-2 border-2 border-gold bg-gold px-6 font-semibold text-black shadow-brutal-sm transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:brightness-110 hover:shadow-none"
       >
         {loading ? (
           <Loader2 className="size-4 animate-spin" />

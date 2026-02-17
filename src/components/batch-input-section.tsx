@@ -22,17 +22,17 @@ export function BatchInputSection({
     .filter((line) => line.trim().match(/^https?:\/\//)).length;
 
   return (
-    <div className="flex w-full flex-col gap-3 rounded-lg border-2 border-crafter-amber-dark/30 bg-card shadow-brutal dark:border-crafter-teal/30">
-      <div className="flex items-center justify-between border-b-2 border-crafter-amber-dark/20 px-4 py-3 dark:border-crafter-teal/20">
+    <div className="flex w-full flex-col border-2 border-border bg-card shadow-brutal">
+      <div className="flex items-center justify-between border-b-2 border-border px-4 py-3">
         <div className="flex items-center gap-2">
-          <Layers className="size-5 text-crafter-amber-dark dark:text-crafter-teal" />
+          <Layers className="size-5 text-gold" />
           <span className="font-semibold text-sm">Batch URLs</span>
         </div>
         <span className="font-mono text-muted-foreground text-xs">
           {urlCount} URL{urlCount !== 1 ? "s" : ""} detected
         </span>
       </div>
-      <div className="px-4 pb-4">
+      <div className="p-4">
         <Textarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
@@ -45,7 +45,7 @@ export function BatchInputSection({
         <Button
           onClick={onSubmit}
           disabled={loading || urlCount === 0}
-          className="mt-3 w-full gap-2 rounded-md border-2 border-crafter-amber-dark bg-crafter-amber-dark px-6 font-semibold text-white shadow-brutal-sm transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-crafter-amber hover:shadow-none dark:border-crafter-teal dark:bg-crafter-teal dark:hover:bg-crafter-teal/80"
+          className="mt-3 w-full gap-2 border-2 border-gold bg-gold px-6 font-semibold text-black shadow-brutal-sm transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:brightness-110 hover:shadow-none"
         >
           {loading ? (
             <Loader2 className="size-4 animate-spin" />
