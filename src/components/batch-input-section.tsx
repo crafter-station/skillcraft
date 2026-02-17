@@ -22,10 +22,10 @@ export function BatchInputSection({
     .filter((line) => line.trim().match(/^https?:\/\//)).length;
 
   return (
-    <div className="flex w-full flex-col gap-3 rounded-lg border-2 border-black bg-white shadow-brutal dark:border-white dark:bg-black">
-      <div className="flex items-center justify-between border-b-2 border-black px-4 py-3 dark:border-white">
+    <div className="flex w-full flex-col gap-3 rounded-lg border-2 border-crafter-amber-dark/30 bg-card shadow-brutal dark:border-crafter-teal/30">
+      <div className="flex items-center justify-between border-b-2 border-crafter-amber-dark/20 px-4 py-3 dark:border-crafter-teal/20">
         <div className="flex items-center gap-2">
-          <Layers className="size-5 text-muted-foreground" />
+          <Layers className="size-5 text-crafter-amber-dark dark:text-crafter-teal" />
           <span className="font-semibold text-sm">Batch URLs</span>
         </div>
         <span className="font-mono text-muted-foreground text-xs">
@@ -45,14 +45,14 @@ export function BatchInputSection({
         <Button
           onClick={onSubmit}
           disabled={loading || urlCount === 0}
-          className="mt-3 w-full gap-2 rounded-md border-2 border-black bg-black px-6 font-semibold text-white shadow-brutal-sm transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none dark:border-white dark:bg-white dark:text-black"
+          className="mt-3 w-full gap-2 rounded-md border-2 border-crafter-amber-dark bg-crafter-amber-dark px-6 font-semibold text-white shadow-brutal-sm transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-crafter-amber hover:shadow-none dark:border-crafter-teal dark:bg-crafter-teal dark:hover:bg-crafter-teal/80"
         >
           {loading ? (
             <Loader2 className="size-4 animate-spin" />
           ) : (
             <Wand2 className="size-4" />
           )}
-          Generate {urlCount} Skill{urlCount !== 1 ? "s" : ""}
+          Craft {urlCount} Skill{urlCount !== 1 ? "s" : ""}
         </Button>
       </div>
     </div>

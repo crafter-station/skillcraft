@@ -23,9 +23,9 @@ export function InputSection({
         e.preventDefault();
         onSubmit();
       }}
-      className="flex w-full items-center gap-2 rounded-lg border-2 border-black bg-white p-2 shadow-brutal dark:border-white dark:bg-black"
+      className="flex w-full items-center gap-2 rounded-lg border-2 border-crafter-amber-dark/30 bg-card p-2 shadow-brutal dark:border-crafter-teal/30"
     >
-      <Terminal className="ml-2 size-5 shrink-0 text-muted-foreground" />
+      <Terminal className="ml-2 size-5 shrink-0 text-crafter-amber-dark dark:text-crafter-teal" />
       <Input
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -36,14 +36,14 @@ export function InputSection({
       <Button
         type="submit"
         disabled={loading || !value.trim()}
-        className="shrink-0 gap-2 rounded-md border-2 border-black bg-black px-6 font-semibold text-white shadow-brutal-sm transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none dark:border-white dark:bg-white dark:text-black"
+        className="shrink-0 gap-2 rounded-md border-2 border-crafter-amber-dark bg-crafter-amber-dark px-6 font-semibold text-white shadow-brutal-sm transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:bg-crafter-amber hover:shadow-none dark:border-crafter-teal dark:bg-crafter-teal dark:hover:bg-crafter-teal/80"
       >
         {loading ? (
           <Loader2 className="size-4 animate-spin" />
         ) : (
           <Wand2 className="size-4" />
         )}
-        Generate
+        Craft
       </Button>
     </form>
   );

@@ -9,7 +9,7 @@ import type {
   BatchResult,
   GenerateResponse,
 } from "@/types";
-import { Github, Layers, Sparkles, Terminal } from "lucide-react";
+import { Github, Hammer, Layers, Terminal } from "lucide-react";
 import { useState } from "react";
 
 type Mode = "single" | "batch";
@@ -89,41 +89,41 @@ export default function Home() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center bg-white px-4 py-12 dark:bg-black">
+    <div className="flex min-h-screen flex-col items-center bg-background px-4 py-12">
       <div className="flex w-full max-w-3xl flex-col items-center gap-8">
         <header className="flex flex-col items-center gap-4 text-center">
           <div className="flex items-center gap-3">
-            <div className="flex size-12 items-center justify-center rounded-lg border-2 border-black shadow-brutal-sm dark:border-white">
-              <Sparkles className="size-6" />
+            <div className="flex size-12 items-center justify-center rounded-lg border-2 border-crafter-amber-dark bg-crafter-amber/10 shadow-brutal-sm dark:border-crafter-teal dark:bg-crafter-teal/10">
+              <Hammer className="size-6 text-crafter-amber-dark dark:text-crafter-teal" />
             </div>
             <h1 className="font-bold text-4xl tracking-tight">
-              <span className="bg-gradient-to-r from-black to-black/60 bg-clip-text text-transparent dark:from-white dark:to-white/60">
+              <span className="bg-gradient-to-r from-crafter-amber-dark to-crafter-teal bg-clip-text text-transparent">
                 skillcraft
               </span>
             </h1>
           </div>
           <p className="max-w-md text-muted-foreground">
-            Generate AI agent skills from any documentation URL. Powered by
-            Firecrawl for scraping and your choice of LLM.
+            Generate AI agent skills from any documentation URL. Open source,
+            powered by Firecrawl and your choice of LLM.
           </p>
           <a
             href="https://github.com/crafter-station/skillcraft"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 font-mono text-muted-foreground text-xs transition-colors hover:text-foreground"
+            className="flex items-center gap-1.5 font-mono text-muted-foreground text-xs transition-colors hover:text-crafter-amber-dark dark:hover:text-crafter-teal"
           >
             <Github className="size-3.5" />
             crafter-station/skillcraft
           </a>
         </header>
 
-        <div className="flex items-center gap-1 rounded-lg border-2 border-black p-1 shadow-brutal-sm dark:border-white">
+        <div className="flex items-center gap-1 rounded-lg border-2 border-crafter-amber-dark/30 bg-card p-1 shadow-brutal-sm dark:border-crafter-teal/30">
           <button
             type="button"
             onClick={() => setMode("single")}
-            className={`flex items-center gap-2 rounded-md px-4 py-2 font-semibold text-sm transition-colors ${
+            className={`flex items-center gap-2 rounded-md px-4 py-2 font-semibold text-sm transition-all ${
               mode === "single"
-                ? "bg-black text-white dark:bg-white dark:text-black"
+                ? "bg-crafter-amber-dark text-white shadow-sm dark:bg-crafter-teal"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
@@ -133,9 +133,9 @@ export default function Home() {
           <button
             type="button"
             onClick={() => setMode("batch")}
-            className={`flex items-center gap-2 rounded-md px-4 py-2 font-semibold text-sm transition-colors ${
+            className={`flex items-center gap-2 rounded-md px-4 py-2 font-semibold text-sm transition-all ${
               mode === "batch"
-                ? "bg-black text-white dark:bg-white dark:text-black"
+                ? "bg-crafter-amber-dark text-white shadow-sm dark:bg-crafter-teal"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
@@ -182,11 +182,11 @@ export default function Home() {
               href="https://github.com/crafter-station"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium underline underline-offset-4 transition-colors hover:text-foreground"
+              className="font-medium text-crafter-amber-dark underline underline-offset-4 transition-colors hover:text-crafter-amber dark:text-crafter-teal dark:hover:text-crafter-teal/80"
             >
               Crafter Station
             </a>
-            . Uses{" "}
+            {" "}/ Powered by{" "}
             <a
               href="https://firecrawl.dev"
               target="_blank"
@@ -194,8 +194,7 @@ export default function Home() {
               className="font-medium underline underline-offset-4 transition-colors hover:text-foreground"
             >
               Firecrawl
-            </a>{" "}
-            for scraping.
+            </a>
           </p>
         </footer>
       </div>
